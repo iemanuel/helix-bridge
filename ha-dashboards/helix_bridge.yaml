@@ -1,0 +1,130 @@
+title: "Helix Bridge"
+icon: mdi:solar-power
+views:
+  - title: Power
+    cards:
+      - type: grid
+        columns: 4
+        cards:
+          - type: sensor
+            entity: sensor.helix_bridge_pv_power
+            name: PV Power
+            graph: line
+          - type: sensor
+            entity: sensor.helix_bridge_grid_power
+            name: Grid Power
+            graph: line
+          - type: sensor
+            entity: sensor.helix_bridge_battery_power
+            name: Battery Power
+            graph: line
+          - type: sensor
+            entity: sensor.helix_bridge_load_power
+            name: Load Power
+            graph: line
+      - type: horizontal-stack
+        cards:
+          - type: gauge
+            entity: sensor.helix_bridge_battery_soc
+            name: Battery SOC
+            severity:
+              green: 50
+              yellow: 25
+              red: 0
+          - type: sensor
+            entity: sensor.helix_bridge_battery_voltage
+            name: Battery Voltage
+          - type: sensor
+            entity: sensor.helix_bridge_battery_current
+            name: Battery Current
+          - type: sensor
+            entity: sensor.helix_bridge_battery_temperature
+            name: Battery Temp
+      - type: entities
+        title: Essential / Non-essential
+        entities:
+          - entity: sensor.helix_bridge_load_power_essential
+            name: Essential Load
+          - entity: sensor.helix_bridge_load_power_non_essential
+            name: Non-Essential Load
+          - entity: sensor.helix_bridge_generator_power
+            name: Generator Power
+          - entity: sensor.helix_bridge_ac_couple_pv_power
+            name: AC Couple PV
+          - entity: sensor.helix_bridge_auxiliary_pv_power
+            name: Auxiliary PV
+
+  - title: PV Strings
+    cards:
+      - type: entities
+        title: Per-MPPT
+        entities:
+          - entity: sensor.helix_bridge_pv_power_1
+            name: PV1 Power
+          - entity: sensor.helix_bridge_pv_power_2
+            name: PV2 Power
+          - entity: sensor.helix_bridge_pv_power_3
+            name: PV3 Power
+          - entity: sensor.helix_bridge_pv_power_predicted
+            name: PV Predicted
+      - type: entities
+        title: Voltage & Current
+        entities:
+          - entity: sensor.helix_bridge_pv_voltage
+            name: PV Voltage
+          - entity: sensor.helix_bridge_pv_voltage_1
+            name: PV1 Voltage
+          - entity: sensor.helix_bridge_pv_voltage_2
+            name: PV2 Voltage
+          - entity: sensor.helix_bridge_pv_voltage_3
+            name: PV3 Voltage
+          - entity: sensor.helix_bridge_pv_current
+            name: PV Current
+          - entity: sensor.helix_bridge_pv_current_1
+            name: PV1 Current
+          - entity: sensor.helix_bridge_pv_current_2
+            name: PV2 Current
+          - entity: sensor.helix_bridge_pv_current_3
+            name: PV3 Current
+
+  - title: Grid
+    cards:
+      - type: grid
+        columns: 2
+        cards:
+          - type: sensor
+            entity: sensor.helix_bridge_grid_voltage
+            name: Grid Voltage
+            graph: line
+          - type: sensor
+            entity: sensor.helix_bridge_grid_frequency
+            name: Grid Frequency
+            graph: line
+      - type: entities
+        entities:
+          - entity: sensor.helix_bridge_ac_output_voltage
+            name: AC Output Voltage
+          - entity: sensor.helix_bridge_inverter_temp
+            name: Inverter Temperature
+
+  - title: Energy
+    cards:
+      - type: grid
+        columns: 2
+        cards:
+          - type: sensor
+            entity: sensor.helix_bridge_pv_energy_today
+            name: PV Energy Today
+            graph: line
+          - type: sensor
+            entity: sensor.helix_bridge_load_energy_today
+            name: Load Energy Today
+            graph: line
+          - type: sensor
+            entity: sensor.helix_bridge_grid_energy_import_today
+            name: Grid Import Today
+            graph: line
+          - type: sensor
+            entity: sensor.helix_bridge_grid_energy_export_today
+            name: Grid Export Today
+            graph: line

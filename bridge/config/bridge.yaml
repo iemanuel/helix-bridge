@@ -1,0 +1,81 @@
+bridge:
+  name: helix-bridge
+  log_level: info
+  poll_interval: 5
+
+inverter:
+  # Supported types:
+  #   simulation         - Simulated data for testing
+  #   victron_vedirect   - Victron Energy VE.Direct serial
+  #
+  #   victron_vedirect   - Victron Energy VE.Direct serial
+  #   generic_modbus     - User-defined Modbus register map
+  #
+  #   sunsynk / deye / sol_ark  - Deye/Sunsynk/Sol-Ark hybrid (Modbus RTU)
+  #   solis              - Solis/Ginlong (Modbus RTU)
+  #   growatt            - Growatt (Modbus RTU, set model: min|tlx|sph|spa)
+  #   sofar              - Sofar (Modbus RTU, set model: ktl|hvt|hybrid|me)
+  #   luxpower           - Luxpower (Modbus RTU)
+  #   huawei             - Huawei SUN2000 (Modbus RTU)
+  #   goodwe             - Goodwe (Modbus TCP)
+  #   sma                - SMA SunSpec (Modbus TCP)
+  #   fronius            - Fronius Symo/Gen24 (Modbus TCP)
+  #   voltronic/axpert/mppsolar - Voltronic/Axpert serial (QPIGS)
+  #   sunspec            - Generic SunSpec over Modbus (auto-discovery)
+  #
+  type: simulation
+  device: ""
+  model: ""                 # Sub-model for growatt/sofar/fronius
+  baud_rate: 19200
+  modbus_port: 502
+  modbus_host: ""           # TCP hostname (overrides device for TCP)
+  modbus_address: 1
+  modbus_timeout: 5
+
+mqtt:
+  enabled: true
+  host: mqtt
+  port: 1883
+  topic_prefix: helix_bridge
+  ha_discovery: true
+  ha_discovery_prefix: homeassistant
+
+metrics:
+  # Power
+  - {name: pv_power, description: "PV Power", unit: W, icon: mdi:solar-power, device_class: power, state_class: measurement}
+  - {name: pv_power_1, description: "PV Power 1", unit: W, icon: mdi:solar-power, device_class: power, state_class: measurement}
+  - {name: pv_power_2, description: "PV Power 2", unit: W, icon: mdi:solar-power, device_class: power, state_class: measurement}
+  - {name: pv_power_3, description: "PV Power 3", unit: W, icon: mdi:solar-power, device_class: power, state_class: measurement}
+  - {name: pv_power_predicted, description: "PV Power Predicted", unit: W, icon: mdi:solar-power, device_class: power, state_class: measurement}
+  - {name: grid_power, description: "Grid Power", unit: W, icon: mdi:transmission-tower, device_class: power, state_class: measurement}
+  - {name: battery_power, description: "Battery Power", unit: W, icon: mdi:battery, device_class: power, state_class: measurement}
+  - {name: load_power, description: "Load Power", unit: W, icon: mdi:flash, device_class: power, state_class: measurement}
+  - {name: load_power_essential, description: "Load Power Essential", unit: W, icon: mdi:flash, device_class: power, state_class: measurement}
+  - {name: load_power_non_essential, description: "Load Power Non-Essential", unit: W, icon: mdi:flash, device_class: power, state_class: measurement}
+  - {name: ac_couple_pv_power, description: "AC Couple PV Power", unit: W, icon: mdi:solar-power, device_class: power, state_class: measurement}
+  - {name: auxiliary_pv_power, description: "Auxiliary PV Power", unit: W, icon: mdi:solar-power, device_class: power, state_class: measurement}
+  - {name: generator_power, description: "Generator Power", unit: W, icon: mdi:engine, device_class: power, state_class: measurement}
+  # Voltage / Frequency
+  - {name: grid_voltage, description: "Grid Voltage", unit: V, icon: mdi:sine-wave, device_class: voltage, state_class: measurement}
+  - {name: grid_frequency, description: "Grid Frequency", unit: Hz, icon: mdi:sine-wave, device_class: frequency, state_class: measurement}
+  - {name: pv_voltage, description: "PV Voltage", unit: V, icon: mdi:solar-power, device_class: voltage, state_class: measurement}
+  - {name: pv_voltage_1, description: "PV Voltage 1", unit: V, icon: mdi:solar-power, device_class: voltage, state_class: measurement}
+  - {name: pv_voltage_2, description: "PV Voltage 2", unit: V, icon: mdi:solar-power, device_class: voltage, state_class: measurement}
+  - {name: pv_voltage_3, description: "PV Voltage 3", unit: V, icon: mdi:solar-power, device_class: voltage, state_class: measurement}
+  - {name: battery_voltage, description: "Battery Voltage", unit: V, icon: mdi:battery, device_class: voltage, state_class: measurement}
+  - {name: ac_output_voltage, description: "AC Output Voltage", unit: V, icon: mdi:sine-wave, device_class: voltage, state_class: measurement}
+  # Current
+  - {name: battery_current, description: "Battery Current", unit: A, icon: mdi:current-dc, device_class: current, state_class: measurement}
+  - {name: pv_current, description: "PV Current", unit: A, icon: mdi:current-dc, device_class: current, state_class: measurement}
+  - {name: pv_current_1, description: "PV Current 1", unit: A, icon: mdi:current-dc, device_class: current, state_class: measurement}
+  - {name: pv_current_2, description: "PV Current 2", unit: A, icon: mdi:current-dc, device_class: current, state_class: measurement}
+  - {name: pv_current_3, description: "PV Current 3", unit: A, icon: mdi:current-dc, device_class: current, state_class: measurement}
+  # Battery / Temperature
+  - {name: battery_soc, description: "Battery State of Charge", unit: "%", icon: mdi:battery, device_class: battery, state_class: measurement}
+  - {name: battery_temperature, description: "Battery Temperature", unit: "°C", icon: mdi:thermometer, device_class: temperature, state_class: measurement}
+  - {name: inverter_temp, description: "Inverter Temperature", unit: "°C", icon: mdi:thermometer, device_class: temperature, state_class: measurement}
+  # Energy
+  - {name: pv_energy_today, description: "PV Energy Today", unit: kWh, icon: mdi:solar-power, device_class: energy, state_class: total_increasing}
+  - {name: load_energy_today, description: "Load Energy Today", unit: kWh, icon: mdi:flash, device_class: energy, state_class: total_increasing}
+  - {name: grid_energy_import_today, description: "Grid Energy Imported Today", unit: kWh, icon: mdi:transmission-tower, device_class: energy, state_class: total_increasing}
+  - {name: grid_energy_export_today, description: "Grid Energy Exported Today", unit: kWh, icon: mdi:transmission-tower, device_class: energy, state_class: total_increasing}

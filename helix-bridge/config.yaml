@@ -1,0 +1,68 @@
+name: "Helix Bridge"
+description: "Solar inverter monitoring bridge. Collects metrics from Goodwe, Huawei, Sunsynk/Deye and other inverters, publishes to Home Assistant via MQTT."
+version: "1.0.0"
+slug: "helix-bridge"
+init: false
+arch:
+  - aarch64
+  - amd64
+
+ports:
+  8080/tcp: 8080
+ports_description:
+  8080/tcp: "REST API for metrics and status"
+
+map:
+  - config:rw
+
+devices:
+  - "/dev/ttyUSB0"
+  - "/dev/ttyUSB1"
+  - "/dev/ttyAMA0"
+  - "/dev/ttyS0"
+  - "/dev/serial/by-id/*"
+
+hassio_role: manager
+
+host_network: false
+
+startup: application
+boot: auto
+
+options:
+  mode: simulation
+  type: sunsynk
+  device: ""
+  baud_rate: 19200
+  modbus_host: ""
+  modbus_port: 502
+  modbus_address: 1
+  timeout: 5
+  poll_interval: 5
+  log_level: info
+  mqtt:
+    host: core-mosquitto
+    port: 1883
+    username: ""
+    password: ""
+    topic_prefix: helix_bridge
+    ha_discovery: true
+
+schema:
+  mode: list(simulation|inverter)
+  type: list(sunsynk|deye|sol_ark|goodwe|huawei|solis|growatt|sofar|luxpower|sma|fronius|voltronic|axpert|mppsolar|victron_vedirect|generic_modbus|sunspec)
+  device: str
+  baud_rate: int(1200,115200)
+  modbus_host: str
+  modbus_port: port
+  modbus_address: int(1,255)
+  timeout: int(1,60)
+  poll_interval: int(1,3600)
+  log_level: list(debug|info|warning|error)
+  mqtt:
+    host: str
+    port: port
+    username: str
+    password: password
+    topic_prefix: str
+    ha_discovery: bool
