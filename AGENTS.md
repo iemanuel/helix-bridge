@@ -18,17 +18,13 @@
 ## Tests
 
 ```sh
-pip install pytest       # no requirements.txt — tests only need pytest + stdlib mocks
+pip install -r requirements.txt
 python -m pytest tests/  # runs all 77 tests
 ```
 
 - `tests/conftest.py` adds `bridge/app` to `sys.path` — so collectors import as `from collectors.base import ...`
 - `MockConfig` in conftest provides minimal config stubs
 - Tests use `unittest.mock` — no integration or hardware tests
-
-## CI
-
-`.github/workflows/ci.yml` references `bridge/requirements.txt` which was removed. Fix needed: install deps directly or create a `requirements-test.txt`.
 
 ## Quirks
 

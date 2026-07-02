@@ -1,1 +1,13 @@
+paho-mqtt==2.1.0
+pyserial==3.5
+pyyaml==6.0.2
+aiohttp
+
+pysolarmanv5==3.0.6
+
+goodwe==0.4.10
+huawei-solar==3.0.6
+sunsynk==0.9.3
+
+# Test dependencies
 pytest
