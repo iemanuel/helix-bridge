@@ -1,6 +1,6 @@
 name: "Helix Bridge"
 description: "Solar inverter monitoring bridge. Collects metrics from Goodwe, Huawei, Sunsynk/Deye and other inverters, publishes to Home Assistant via MQTT."
-version: "1.1.0"
+version: "1.0.0"
 slug: "helix-bridge"
 init: false
 changelog: true
