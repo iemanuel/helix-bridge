@@ -8,6 +8,15 @@ import paho.mqtt.client as mqtt
 log = logging.getLogger("bridge.mqtt")
 
 
+_NAME_FIXES = {
+    "pv": "PV", "soc": "SOC", "ac": "AC", "dc": "DC",
+}
+
+
+def _friendly_name(name):
+    return " ".join(_NAME_FIXES.get(w, w.capitalize()) for w in name.replace("_", " ").split())
+
+
 class MQTTDiscovery:
     def __init__(self, config, metric_defs, write_callback=None):
         self._host = config.mqtt_host
@@ -68,7 +77,7 @@ class MQTTDiscovery:
             state_topic = f"{self._prefix}/state"
 
             config_payload = {
-                "name": meta.get("description", name),
+                "name": _friendly_name(name),
                 "state_topic": state_topic,
                 "unit_of_measurement": meta.get("unit", ""),
                 "device_class": meta.get("device_class", ""),

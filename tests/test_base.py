@@ -1,5 +1,5 @@
 from unittest.mock import MagicMock
-from bridge.app.collectors.base import BaseCollector, CollectorRegistry, metric_definitions
+from collectors.base import BaseCollector, CollectorRegistry, metric_definitions
 
 
 class MinimalCollector(BaseCollector):

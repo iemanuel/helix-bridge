@@ -1,23 +1,4 @@
 services:
-  bridge:
-    build: ./bridge
-    restart: unless-stopped
-    ports:
-      - "8080:8080"
-    volumes:
-      - bridge_data:/data
-      - ./bridge/config:/config:ro
-      - /dev:/dev:ro
-    devices:
-      - /dev/ttyUSB0:/dev/ttyUSB0
-      - /dev/ttyUSB1:/dev/ttyUSB1
-    environment:
-      - BRIDGE_CONFIG=/config/bridge.yaml
-      - BRIDGE_DATA=/data
-      - MQTT_HOST=mqtt
-      - MQTT_PORT=1883
-      - TZ=UTC
-
   mqtt:
     image: eclipse-mosquitto:2
     restart: unless-stopped
@@ -29,5 +10,4 @@ services:
       - ./mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
 
 volumes:
-  bridge_data:
   mqtt_data:

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.0 (2026-07-02)
+
+- Simulation profiles for all 17 supported inverter types with realistic model names
+- Fixed MQTT discovery entity ID consistency (battery_soc no longer shows as battery_state_of_charge)
+- Simplified to HA add-on only; standalone Docker removed
+- Restructured repository: `helix-bridge/` → `bridge/`
+
 ## 1.0.0 (2026-07-02)
 
 Initial stable release. Helix Bridge is a solar inverter monitoring bridge that reads data from 13+ inverter protocol families and publishes to Home Assistant via MQTT.

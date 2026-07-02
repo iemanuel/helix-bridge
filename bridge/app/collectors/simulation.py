@@ -7,42 +7,146 @@ from .base import BaseCollector
 
 log = logging.getLogger("bridge.collector.simulation")
 
+_SUNSYNK_METRICS = {
+    "pv_power", "pv_power_1", "pv_power_2", "pv_power_3",
+    "grid_power", "grid_voltage", "grid_frequency",
+    "load_power", "load_power_essential", "load_power_non_essential",
+    "battery_power", "battery_soc", "battery_voltage", "battery_current",
+    "battery_temperature",
+    "pv_voltage", "pv_voltage_1", "pv_voltage_2", "pv_voltage_3",
+    "pv_current", "pv_current_1", "pv_current_2", "pv_current_3",
+    "inverter_temp", "ac_couple_pv_power", "auxiliary_pv_power",
+    "generator_power",
+    "ac_output_voltage",
+    "pv_energy_today", "load_energy_today",
+    "grid_energy_import_today", "grid_energy_export_today",
+}
+
+_GOODWE_METRICS = {
+    "pv_power", "grid_power", "battery_power", "load_power",
+    "battery_soc", "battery_voltage",
+    "grid_voltage", "grid_frequency", "pv_voltage", "inverter_temp",
+    "pv_energy_today", "load_energy_today",
+    "grid_energy_import_today", "grid_energy_export_today",
+}
+
+_HUAWEI_METRICS = {
+    "pv_power", "grid_power", "grid_frequency", "grid_voltage",
+    "pv_voltage", "inverter_temp",
+    "pv_energy_today", "grid_energy_import_today", "grid_energy_export_today",
+    "battery_soc", "battery_power", "battery_voltage",
+}
+
+_GENERIC_HYBRID_METRICS = {
+    "pv_power", "grid_power", "battery_power", "load_power",
+    "battery_soc", "grid_voltage", "grid_frequency",
+    "pv_voltage", "battery_voltage", "inverter_temp",
+}
+
+_SOLIS_METRICS = {
+    "pv_power", "grid_power", "grid_frequency", "grid_voltage",
+    "pv_voltage", "inverter_temp",
+    "pv_energy_today", "grid_energy_import_today", "grid_energy_export_today",
+}
+
+_GROWATT_METRICS = {
+    "pv_power", "grid_power", "grid_frequency",
+    "pv_energy_today", "grid_energy_import_today",
+    "load_power", "battery_power", "battery_soc", "battery_voltage", "inverter_temp",
+}
+
+_SOFAR_METRICS = {
+    "pv_power", "grid_power", "grid_frequency", "grid_voltage",
+    "pv_voltage", "inverter_temp",
+    "pv_energy_today", "grid_energy_import_today",
+    "load_power", "battery_power", "battery_soc", "battery_voltage", "load_energy_today",
+}
+
+_VOLTRONIC_METRICS = {
+    "pv_power", "grid_power", "grid_voltage", "grid_frequency",
+    "load_power", "battery_power", "battery_soc", "battery_voltage",
+    "inverter_temp", "pv_voltage",
+}
+
+_VICTRON_METRICS = {
+    "pv_power", "battery_power", "battery_soc", "battery_voltage", "load_power",
+}
+
+_SUNSPEC_METRICS = {
+    "pv_power", "pv_voltage", "grid_power", "grid_frequency", "grid_voltage",
+    "inverter_temp", "pv_energy_today",
+    "grid_energy_import_today", "grid_energy_export_today",
+    "battery_soc", "battery_power", "battery_voltage",
+}
+
 SIM_PROFILES = {
     "goodwe": {
         "name": "Goodwe GW10K-ET",
-        "metrics": {
-            "pv_power", "grid_power", "battery_power", "load_power",
-            "battery_soc", "battery_voltage",
-            "grid_voltage", "grid_frequency", "pv_voltage", "inverter_temp",
-            "pv_energy_today", "load_energy_today",
-            "grid_energy_import_today", "grid_energy_export_today",
-        },
+        "metrics": _GOODWE_METRICS,
     },
-    "huawei": {
-        "name": "Huawei SUN2000-10KTL-M1",
-        "metrics": {
-            "pv_power", "grid_power", "grid_frequency", "grid_voltage",
-            "pv_voltage", "inverter_temp",
-            "pv_energy_today", "grid_energy_import_today", "grid_energy_export_today",
-            "battery_soc", "battery_power", "battery_voltage",
-        },
+    "deye": {
+        "name": "Deye 12kW Three Phase",
+        "metrics": _SUNSYNK_METRICS,
+    },
+    "sol_ark": {
+        "name": "Sol-Ark 12K",
+        "metrics": _SUNSYNK_METRICS,
     },
     "sunsynk": {
         "name": "Sunsynk 12kW Three Phase",
-        "metrics": {
-            "pv_power", "pv_power_1", "pv_power_2", "pv_power_3",
-            "grid_power", "grid_voltage", "grid_frequency",
-            "load_power", "load_power_essential", "load_power_non_essential",
-            "battery_power", "battery_soc", "battery_voltage", "battery_current",
-            "battery_temperature",
-            "pv_voltage", "pv_voltage_1", "pv_voltage_2", "pv_voltage_3",
-            "pv_current", "pv_current_1", "pv_current_2", "pv_current_3",
-            "inverter_temp", "ac_couple_pv_power", "auxiliary_pv_power",
-            "generator_power",
-            "ac_output_voltage",
-            "pv_energy_today", "load_energy_today",
-            "grid_energy_import_today", "grid_energy_export_today",
-        },
+        "metrics": _SUNSYNK_METRICS,
+    },
+    "huawei": {
+        "name": "Huawei SUN2000-10KTL-M1",
+        "metrics": _HUAWEI_METRICS,
+    },
+    "solis": {
+        "name": "Solis S6-GR1P10K",
+        "metrics": _SOLIS_METRICS,
+    },
+    "growatt": {
+        "name": "Growatt SPH 10000TL3 BH-UP",
+        "metrics": _GROWATT_METRICS,
+    },
+    "sofar": {
+        "name": "Sofar HYD 10KTL-3PH",
+        "metrics": _SOFAR_METRICS,
+    },
+    "luxpower": {
+        "name": "Luxpower SNA 10K",
+        "metrics": _GOODWE_METRICS,
+    },
+    "sma": {
+        "name": "SMA Sunny Boy Storage 5.0",
+        "metrics": _HUAWEI_METRICS,
+    },
+    "fronius": {
+        "name": "Fronius Symo GEN24 10.0",
+        "metrics": _GENERIC_HYBRID_METRICS,
+    },
+    "voltronic": {
+        "name": "Voltronic Axpert King 5KVA",
+        "metrics": _VOLTRONIC_METRICS,
+    },
+    "axpert": {
+        "name": "Voltronic Axpert King 5KVA",
+        "metrics": _VOLTRONIC_METRICS,
+    },
+    "mppsolar": {
+        "name": "Voltronic MPP Solar 5KVA",
+        "metrics": _VOLTRONIC_METRICS,
+    },
+    "victron_vedirect": {
+        "name": "Victron Energy Multiplus-II",
+        "metrics": _VICTRON_METRICS,
+    },
+    "sunspec": {
+        "name": "Generic SunSpec Inverter",
+        "metrics": _SUNSPEC_METRICS,
+    },
+    "generic_modbus": {
+        "name": "Generic Modbus Inverter",
+        "metrics": _GENERIC_HYBRID_METRICS,
     },
 }
 
